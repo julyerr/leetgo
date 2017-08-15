@@ -1,0 +1,73 @@
+docker & moby:
+	https://www.zhihu.com/question/58805021
+	构建出的庞大粉丝团体和google搜索内容全部转移到docker公司的商业产品上
+你们今后的工作方式是：贡献Moby下的项目，然后使用Docker公司的Docker CE产品
+linuxkit 就是一个distro，moby 社区的活跃度是一个问好，开始的swarmkit之后，docker swarm项目一副惨淡光景
+
+大致是说因为 moby 要打破 Docker 现在 monolithic 的设计，分成不同的 components 放在不同的 repo 里。而 moby 负责把这些 components build 成 Docker CE，也可以通过定制修改等方式构建自己的 Docker 发行版。
+moby 有一个很值得关注的子项目，linuxkit/linuxkit。给定一个 linuxkit.yml，写好 kernel 和 init，然后定义好要运行的 service，就会构建出一个操作系统来，boot 的时候就会运行定义的 service。这应该是 moby 在操作系统级别的 kit
+
+new version of docker learning:
+
+source code tree:
+
+api：定义API，使用了Swagger2.0这个工具来生成API，配置文件在api/swagger.yaml
+builder：用来build docker镜像的包，看来历史比较悠久了
+bundles：这个包是在进行docker源码编译和开发环境搭建的时候用到的，编译生成的二进制文件都在这里。
+oci：Open Container Interface库
+opts：命令行的选项库。
+runconfig：配置格式解码和校验。
+vendor：各种依赖包。
+profiles：里面有apparmor和seccomp两个目录。用于内核访问控制。
+
+cli：使用cobra工具生成的docker客户端命令行解析器。
+client：接收cli的请求，调用RESTful API中的接口，向server端发送http请求。
+cmd：其中包括docker和dockerd两个包，他们分别包含了客户端和服务端的main函数入口。
+daemon：这个包中将docker deamon运行时状态expose出来。
+container：容器的配置管理，对不同的platform适配。
+layer：管理 union file system driver上的read-only和read-write mounts。
+libcontainerd：访问内核中的容器系统调用。
+distribution：负责docker镜像的pull、push和镜像仓库的维护。
+restartmanager：处理重启后的动作。
+registry：docker registry的实现。
+volume：docker volume的实现。
+image：用于构建docker镜像的。
+plugin：docker插件后端实现包。
+migrate：将老版本的graph目录转换成新的metadata。
+
+docs：文档。这个目录已经不再维护，文档在另一个仓库里https://github.com/docker/docker.github.io/。
+contrib：这个目录包括一些有用的脚本、镜像和其他非docker core中的部分。
+dockerversion：编译的时候自动生成的。
+experimental：从docker1.13.0版本起开始增加了实验特性。
+hack：创建docker开发环境和编译打包时用到的脚本和配置文件。
+integration-cli：集成测试
+man：生成man pages。
+pkg：is a collection of utility packages used by the Docker project without being specific to its internals.
+project：项目管理的一些说明文档。
+reference：处理docker store中镜像的reference。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,31 @@
+import "net"
+
+ip:
+	net.ParseIP()
+type TCPAddr struct {
+    IP IP
+    Port int
+}
+
+func ResolveTCPAddr(net, addr string) (*TCPAddr, os.Error)
+	net参数是"tcp4"、"tcp6"、"tcp"中的任意一个，分别表示TCPv4、TCPv6或者任意
+	addr表示域名或者IP地址，例如"www.google.com:80" 或者"127.0.0.1:22".
+func DialTCP(net string, laddr, raddr *TCPAddr) (c *TCPConn, err os.Error)
+	net参数是"tcp4"、"tcp6"、"tcp"中的任意一个，分别表示TCPv4、TCPv6或者任意
+	laddr表示本机地址，一般设置为nil
+	raddr表示远程的服务地址	
+func (c *TCPConn) Write(b []byte) (n int, err os.Error)
+func (c *TCPConn) Read(b []byte) (n int, err os.Error)
+	func ListenTCP(net string, laddr *TCPAddr) (l *TCPListener, err os.Error)
+	func (l *TCPListener) Accept() (c Conn, err os.Error)
+控制tcp连接：
+	func (c *TCPConn) SetTimeout(nsec int64) os.Error
+	func (c *TCPConn) SetKeepAlive(keepalive bool) os.Error
+
+udp different from tcp(instead of the long conn , the package message):
+	func ResolveUDPAddr(net, addr string) (*UDPAddr, os.Error)
+	func DialUDP(net string, laddr, raddr *UDPAddr) (c *UDPConn, err os.Error)
+	func ListenUDP(net string, laddr *UDPAddr) (c *UDPConn, err os.Error)
+	func (c *UDPConn) ReadFromUDP(b []byte) (n int, addr *UDPAddr, err os.Error
+	func (c *UDPConn) WriteToUDP(b []byte, addr *UDPAddr) (n int, err os.Error)	
+
