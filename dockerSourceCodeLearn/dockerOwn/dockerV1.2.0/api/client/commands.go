@@ -125,4 +125,32 @@ func (cli *DockerCli) CmdPull(args ...string) error{
 		return err
 	}
 	cli.LoadConfigFile()
+
+	authConfig := cli.configFile.ResolveAuthConfig(hostname)
+	pull := func(authConfig registry.AuthConfig) error{
+		buf,err := json.Marshal(authConfig)
+		if err != nil{
+			return err
+		}
+		registryAuthHeader := []string{
+			base64.URLEncoding.EncodeToString(buf),
+		}
+		return cli.stream("POST","/images/create?"+v.Encode(),nil,cli.out,map[string][]string{
+			"X-Registry-Auth":registryAuthHeader,
+			})
+	}
+		if err := pull(authConfig);err != nil{
+			if strings.Contains(err.Error(),"Status 401"){
+				fmt.Println(cli.out,"\nPlease login prior to pull:")
+				if err:=cli.CmdLogin(hostname);err!= nil{
+					return err
+				}
+				authConfig := cli.configFile.ResolveAuthConfig(hostname)
+				return pull(authConfig)
+			}
+		return err
+		}
+	}
+
+	return nil
 }
