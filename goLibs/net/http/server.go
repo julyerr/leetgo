@@ -3,7 +3,7 @@
  ServeMux
  func NewServeMux() *ServeMux //初始化一个新的ServeMux
 func (mux *ServeMux) Handle(pattern string, handler Handler) //将handler注册为指定的模式，如果该模式已经有了handler，则会出错panic。
-　 func (mux *ServeMux) HandleFunc(pattern string, handler func(ResponseWriter, *Request))//将handler注册为指定的模式
+　 func (mux *ServeMux) HandleFunc(pattern string,w handler func(ResponseWriter, *Request))//将handler注册为指定的模式
 func (mux *ServeMux) Handler(r *Request) (h Handler, pattern string) //根据指定的r.Method,r.Host以及r.RUL.Path返回一个用来处理给定请求的handler。该函数总是返回一个非nil的 handler，如果path不是一个规范格式，则handler会重定向到其规范path。Handler总是返回匹配该请求的的已注册模式；在内建重 定向处理器的情况下，pattern会在重定向后进行匹配。如果没有已注册模式可以应用于该请求，本方法将返回一个内建的"404 page not found"处理器和一个空字符串模式。
 func (mux *ServeMux) ServeHTTP(w ResponseWriter, r *Request)  //该函数用于将最接近请求url模式的handler分配给指定的请求。
 
