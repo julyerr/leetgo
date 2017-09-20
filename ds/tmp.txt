@@ -1,0 +1,26 @@
+http://www.cs.usfca.edu/~galles/visualization/
+
+trie:
+	simple:
+		https://github.com/derekparker/trie
+	dat:
+		introduces:
+			https://turbopeter.github.io/2013/09/02/prefix-match/
+			http://blog.csdn.net/heiyeshuwu/article/details/42526461
+		https://github.com/awsong/go-darts/blob/master/darts.go
+		https://github.com/smtc/godat	
+
+	projects:
+		beego router:https://github.com/beego/mux
+		http router:https://github.com/gowww/router
+
+
+ac:
+http://blog.csdn.net/sealyao/article/details/4560427
+http://www.cnblogs.com/nullzx/p/7499397.html
+	implement:
+		https://github.com/anknown/ahocorasick
+		https://github.com/leesper/goac
+
+related projects:
+	https://github.com/11061055/word-filter		
